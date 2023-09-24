@@ -1,0 +1,59 @@
+variables:
+  DOCKER_HOST: "tcp://docker-dind.gitlab-suma:2375"
+  BUILD_DOCKER_IMAGE: docker:24.0.5
+  DEPLOY_KUBERNETES_IMAGE: alpine/k8s:1.22.6
+  DOCKER_FPM_IMAGE_NAME: fpm
+  DOCKER_NGINX_IMAGE_NAME: nginx
+  DOCKER_NODE_IMAGE_NAME: node
+  DOCKER_REDIS_IMAGE_NAME: redis
+  KUBE_NAMESPACE: metager-2
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "development" &&  ($CI_COMMIT_TAG || $CI_COMMIT_BRANCH)
+      variables:
+        APP_URL: "https://${DOCKER_IMAGE_TAG_PREFIX}.review.metager.de"
+        APP_ENV: development
+        DOCKER_IMAGE_TAG_PREFIX: $CI_COMMIT_REF_SLUG
+        DOCKER_COMPOSER_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-composer-$CI_COMMIT_SHA
+        DOCKER_FPM_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NGINX_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NODE_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_REDIS_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        HELM_RELEASE_NAME: review-$DOCKER_IMAGE_TAG_PREFIX
+    - if: $CI_COMMIT_BRANCH == "master"
+      variables:
+        APP_URL: https://metager.de
+        APP_ENV: production
+        DOCKER_IMAGE_TAG_PREFIX: $CI_COMMIT_BRANCH
+        DOCKER_COMPOSER_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-composer-$CI_COMMIT_SHA
+        DOCKER_FPM_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NGINX_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NODE_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_REDIS_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        HELM_RELEASE_NAME: $DOCKER_IMAGE_TAG_PREFIX
+    - if: $CI_COMMIT_BRANCH == "development"
+      variables:
+        APP_URL: https://metager3.de
+        APP_ENV: development
+        DOCKER_IMAGE_TAG_PREFIX: $CI_COMMIT_BRANCH
+        DOCKER_COMPOSER_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-composer-$CI_COMMIT_SHA
+        DOCKER_FPM_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NGINX_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_NODE_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        DOCKER_REDIS_IMAGE_TAG: $DOCKER_IMAGE_TAG_PREFIX-$CI_COMMIT_SHA
+        HELM_RELEASE_NAME: $DOCKER_IMAGE_TAG_PREFIX
+
+stages:
+  - build_dependency_images
+  - build_dependencies
+  - build_docker_images
+  - deploy
+  - integrationtest
+
+include:
+  - local: /.gitlab/ci/build_dependency_images.yml
+  - local: /.gitlab/ci/build_dependencies.yml
+  - local: /.gitlab/ci/build_docker_images.yml
+  - local: /.gitlab/ci/deploy.yml
+  - local: /.gitlab/ci/integrationtest.yml

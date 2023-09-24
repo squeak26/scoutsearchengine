@@ -1,0 +1,121 @@
+version: "3.8"
+
+# Volumes
+volumes:
+  composer_cache: {}
+  node_cache: {}
+
+# Services
+services:
+  fpm:
+    image: metager:latest
+    build:
+      context: ./
+      dockerfile: build/fpm/Dockerfile
+      target: ${APP_ENV}
+    pull_policy: never
+    restart: unless-stopped
+    networks:
+      - metager
+    volumes:
+      - ./metager:/metager/metager_app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: "curl -f http://nginx:8080/health-check/liveness"
+  nginx:
+    image: metager_nginx:latest
+    build:
+      context: ./
+      dockerfile: build/nginx/Dockerfile
+      target: ${APP_ENV}
+    restart: unless-stopped
+    depends_on:
+      - fpm
+    networks:
+      - metager
+    volumes:
+      - ./metager/public:/metager/metager_app/public
+    ports:
+      - 8080:8080
+    healthcheck:
+      test: "curl -f http://nginx:8080/health-check/nginx"
+  scheduler:
+    image: metager:latest
+    pull_policy: never
+    restart: unless-stopped
+    entrypoint: /usr/local/bin/php
+    command: artisan schedule:work-mg
+    networks:
+      - metager
+    volumes:
+      - ./metager:/metager/metager_app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: "curl -f http://nginx:8080/health-check/liveness-scheduler"
+  worker:
+    image: metager:latest
+    pull_policy: never
+    restart: unless-stopped
+    entrypoint: /usr/local/bin/php
+    command: artisan requests:fetcher
+    networks:
+      - metager
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./metager:/metager/metager_app
+    healthcheck:
+      test: "curl -f http://nginx:8080/health-check/liveness-worker"
+  selenium_standalone_firefox:
+    image: ${SELENIUM_IMAGE}
+    restart: always
+    shm_size: 2GB
+    networks:
+      - metager
+    ports:
+      - "7900:7900"
+  composer:
+    image: metager:latest
+    pull_policy: never
+    entrypoint: /usr/bin/composer
+    command: install
+    environment:
+      - COMPOSER_HOME=/composer_cache
+    networks:
+      - metager
+    volumes:
+      - ./metager:/metager/metager_app
+      - composer_cache:/composer_cache
+
+  node:
+    build:
+      context: ./
+      dockerfile: build/node/Dockerfile
+      target: $APP_ENV
+    restart: unless-stopped
+    stop_signal: SIGKILL
+    depends_on:
+      - nginx
+    networks:
+      - metager
+    volumes:
+      - ./metager:/home/node/metager
+      - node_cache:/home/node/.npm
+  redis:
+    build:
+      context: ./build/redis
+    restart: unless-stopped
+    user: "redis:redis"
+    networks:
+      - metager
+    healthcheck:
+      test: "redis-cli ping"
+networks:
+  metager:
+    name: metager_net
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.5.0/24"

@@ -1,0 +1,64 @@
+ingress:
+  hosts:
+    - host: metager.de
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: www.metager.de
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: metager.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: www.metager.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: metager.es
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: www.metager.es
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: metager.nl
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: www.metager.nl
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: metager.co.uk
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: www.metager.co.uk
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - metager.de
+        - metager.org
+        - metager.es
+        - www.metager.org
+      secretName: metager-tls-2023
+    - hosts:
+        - www.metager.de
+        - www.metager.es
+        - metager.nl
+        - www.metager.nl
+        - metager.co.uk
+        - www.metager.co.uk
+      secretName: metager-tls-otherdomains
+
+autoscaling:
+  maxReplicas: 100
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8080"

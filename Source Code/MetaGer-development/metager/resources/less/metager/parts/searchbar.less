@@ -1,0 +1,321 @@
+@searchbar-border-color: #585858;
+@searchbar-border-color-light: #777777;
+
+.searchbar {
+  display: grid;
+  grid-template-rows: max-content 0fr;
+  transition: 300ms;
+  font-size: 1em;
+  background-color: transparent;
+  color: #333;
+  width: 100%;
+  width: calc(100% - 16px);
+  max-width: 600px;
+  margin: 0 auto;
+
+  &[data-suggest="active"]:focus-within {
+    grid-template-rows: max-content 1fr;
+    > .suggestions {
+      border: 1px solid @searchbar-border-color;
+      border-top: 0;
+    }
+  }
+
+  .search-input-submit {
+    background-color: @searchbar-background-color;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    gap: 1rem;
+    #search-key {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.25rem;
+      @supports not (selector(:first-child)) {
+        padding-right: 1rem;
+      }
+      > a {
+        color: #585858;
+        display: block;
+        height: 100%;
+        > img {
+          height: 100%;
+          display: block;
+          transform: rotate(-90deg);
+        }
+        &.authorized {
+          color: green;
+        }
+      }
+    }
+
+    .search-input {
+      flex-grow: 1;
+      height: 1.5rem;
+      position: relative;
+      input {
+        border: none;
+        height: 100%;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: transparent;
+        color: @text-color;
+        padding: 0;
+        line-height: 100%;
+        font-size: 100%;
+        &:focus {
+          outline: 0;
+        }
+        &::-webkit-clear-button,
+        &::-webkit-search-cancel-button {
+          display: none;
+        }
+      }
+      #search-delete-btn {
+        position: absolute;
+        cursor: pointer;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 1.8em;
+        font-weight: normal;
+        display: none;
+        place-content: center;
+        filter: invert(@icon-color);
+
+        &:hover {
+          color: red;
+          filter: invert(0);
+        }
+      }
+
+      &:focus-within:not(.search-delete-js-only)
+        > input:not(:placeholder-shown) {
+        padding-right: 35px; // Makes it so the overlayed delete button does not hide the text below
+        + #search-delete-btn {
+          display: grid;
+        }
+      }
+    }
+
+    .search-submit {
+      height: 1.25rem;
+      button {
+        height: 100%;
+        line-height: 100%;
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+        color: #585858;
+        filter: invert(@icon-color);
+        > img#searchbar-img-lupe {
+          height: 100%;
+          display: block;
+        }
+      }
+    }
+  }
+
+  > .suggestions {
+    --highlight-color: @highlight-color;
+    display: grid;
+    display: none;
+    overflow: hidden;
+    border-left: initial;
+    border-top: 0;
+    border: 0;
+    color: @text-color;
+    background-color: @body-background-color;
+    > .partners {
+      display: flex;
+      gap: 1rem;
+      background-color: var(--highlight-color);
+      padding-inline: 0.5rem;
+      > .partner {
+        display: none;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        padding-block: 1rem;
+        color: inherit;
+
+        > img {
+          height: 1em;
+        }
+        > div {
+          display: grid;
+          align-items: center;
+          grid-template-columns: max-content 1fr;
+          column-gap: 0.5rem;
+          > .description {
+            grid-column: span 2;
+            font-size: 0.7rem;
+          }
+          > div {
+            > .mark {
+              color: limegreen;
+              font-size: 0.5rem;
+              width: max-content;
+              border: 1px solid limegreen;
+              padding: 0.1rem 0.25rem;
+              border-radius: 5px;
+            }
+          }
+        }
+      }
+    }
+    > .suggestion {
+      display: none;
+      cursor: pointer;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.25rem 0.5rem;
+      color: inherit;
+      > img {
+        height: 1rem;
+        filter: invert(@icon-color);
+      }
+      &:hover {
+        background-color: var(--highlight-color);
+      }
+    }
+    > .partner {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.25rem 0.5rem;
+      color: inherit;
+      > img {
+        width: 16px;
+      }
+      > div {
+        > .mark {
+          color: limegreen;
+          font-size: 0.5rem;
+          width: max-content;
+          border: 1px solid limegreen;
+          padding: 0.1rem 0.25rem;
+          border-radius: 5px;
+        }
+      }
+      &:hover {
+        background-color: var(--highlight-color);
+      }
+    }
+  }
+
+  .search-hidden {
+    display: none;
+  }
+
+  .search-custom-hidden {
+    display: none;
+  }
+}
+
+.startpage-searchbar {
+  &[data-suggest="active"]:focus-within {
+    @media (max-height: 680px) {
+      z-index: 21;
+      position: absolute;
+      top: 0;
+      max-width: 100%;
+      width: 100%;
+      grid-template-rows: max-content 1fr;
+      height: 100dvh;
+    }
+  }
+  > * {
+    border: 1px solid @searchbar-border-color;
+
+    &:not(:first-child):not(.suggestions) {
+      border-left: none;
+    }
+  }
+
+  .search-input-submit {
+    border-radius: 5px;
+
+    @media (max-width: @screen-mobile) {
+      max-width: initial;
+    }
+  }
+
+  @media (max-width: @screen-mobile) {
+    .search-focus-selector {
+      border: 1px solid #aaa;
+      border-top: none;
+      border-radius: 5px;
+    }
+
+    .search-input-submit {
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+
+    > * {
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      min-height: 40px;
+
+      &:not(:first-child) {
+        border-left: 1px solid #aaa;
+      }
+    }
+  }
+}
+
+.resultpage-searchbar {
+  grid-template-rows: max-content;
+  .search-input-submit {
+    padding: 0 0.5rem;
+    margin-right: 2rem;
+    .search-input {
+      height: 1.9rem;
+      > input {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+  > .suggestions {
+    display: none;
+    position: absolute;
+    top: 3.8rem;
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  &[data-suggest="active"]:focus-within {
+    > .suggestions {
+      display: grid;
+    }
+  }
+}
+
+#research-bar-placeholder {
+  width: 100%;
+  max-width: 760px;
+  height: 51px;
+}
+
+#searchForm {
+  margin: 0;
+}
+
+#searchbar-img-key {
+  filter: brightness(@searchbar-key-brightness);
+}
+
+#searchbar-img-lupe {
+  filter: invert(1) brightness(@searchbar-searchicon-brightness);
+}
+
+.search-submit button {
+  cursor: pointer;
+}

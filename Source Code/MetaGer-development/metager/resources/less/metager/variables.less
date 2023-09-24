@@ -1,0 +1,97 @@
+// MetaGer Brand Color
+@metager-orange: #ff8000;
+// Shades of Gray
+@color-white: white;
+@color-almost-white: mix(@color-white, @color-black, 90%);
+@color-light-grey: mix(@color-white, @color-black, 75%);
+@color-grey: mix(@color-white, @color-black, 50%);
+@color-strong-grey: mix(@color-white, @color-black, 25%);
+@color-almost-black: mix(@color-white, @color-black, 10%);
+@color-black: black;
+// Default Background Color
+@background-color: @color-white;
+@background-color-mobile: #fafafa;
+@sidebar-list-hover-color: @color-almost-white;
+@invert-state: invert(
+  0%
+); // Inverts color of svgs. Our Svgs are all black which means 0% invert for light and 100% for dark.
+// Default Font
+@metager-font: "Liberation Sans", "Helvetica Neue", "Helvetica", "Arial",
+  sans-serif;
+// General text color.
+@text-color: @color-black;
+@highlight-color: #f7f7fa;
+// Default textual link color.
+@link-color: #06c;
+// Default Mini-Padding
+@padding-small-default: 8px;
+// Screen sizes
+@screen-mobile-s: 320px;
+@screen-mobile-m: 375px;
+@screen-mobile-l: 425px;
+@screen-mobile: @screen-mobile-l;
+@screen-small: 1024px;
+@screen-medium: 1200px;
+// Card styles
+@card-background-color: @background-color;
+// Default Border Color
+@border-color: #ccc;
+
+@result-font-large: 18px;
+@result-font-medium: 16px;
+@result-font-url: 14px;
+@result-font-small: 12px;
+@result-description-color: @color-black;
+@result-image-border-color: @color-almost-white;
+
+// Background color
+@resultpage-background-color: @background-color;
+// Margin to the left of the results
+@results-margin-left: 16px;
+// Min and max widths of the 2 resultpage columns
+@results-width-min: 500px;
+@results-width-max: 800px;
+@additions-width-min: 500px;
+@additions-width-max: 500px;
+// Breakpoints for the 2 resultpage columns
+@resultpage-breakpoint-max: (
+  @results-width-max + @additions-width-max + @padding-small-default * 2 +
+    @padding-small-default * 4 + 6
+);
+@resultpage-breakpoint-min: (
+  @results-width-min + @additions-width-min + @padding-small-default * 4
+);
+@product-shop-color: green;
+// The point upon which a .screen-large logo is displayed
+@logo-size-breakpoint: (@results-width-min + @padding-small-default * 2);
+// The point upon which the sidebar opener switches place
+@sidebar-opener-breakpoint: (
+  @results-width-max + @padding-small-default * 2 + 60px
+);
+// Quicktip background color
+@quicktip-background-color: @color-white;
+// Color of the Spruch author
+@spruch-author-color: @color-strong-grey;
+
+@story-privacy-background: @color-almost-white;
+@story-privacy-color: @color-almost-black;
+@story-ngo-background: white;
+@story-ngo-color: #ad1a00;
+@story-diversity-background: #edfdff;
+@story-diversity-color: #0c4690;
+@story-eco-background: #e3ffe9;
+@story-eco-color: #0c621a;
+@story-plugin-background: white;
+@story-font-color: #474747;
+@icon-color: 0;
+
+@searchbar-background-color: white;
+
+@input-background: #fff;
+@input-text: #000;
+
+@blacklist-entries-odd: rgb(240, 240, 240);
+@blacklist-entries-even: rgb(255, 215, 200);
+
+@searchbar-searchicon-brightness: 0;
+@searchbar-key-brightness: 1;

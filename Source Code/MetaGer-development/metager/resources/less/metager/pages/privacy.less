@@ -1,0 +1,35 @@
+@import "../variables.less";
+
+.privacy {
+  ol,
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  main > div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.6rem;
+    li.kontext-list {
+      display: grid;
+      gap: 1rem;
+      article.kontext {
+        h1 {
+          margin: 0;
+        }
+        display: grid;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  ol.datum-list-general {
+    display: grid;
+    gap: 1rem;
+    article.datum {
+      border: 1px solid @border-color;
+      padding: 1rem;
+    }
+  }
+}

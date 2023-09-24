@@ -1,0 +1,4 @@
+.git
+.dockerignore
+metager/vendor
+metager/node_modules
