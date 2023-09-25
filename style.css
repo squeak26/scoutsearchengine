@@ -1,0 +1,31 @@
+.searchbar{
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.9px);
+    -webkit-backdrop-filter: blur(6.9px);
+    height: 800px;
+    padding: 30px;
+    width: fit-content;
+    margin: 30px;
+    transition-duration: 1s;
+    
+}
+html{
+    background-image: url(https://www.hipi.info/wp-content/uploads/2021/06/Windows-11-Wallpaper015-2048x1280.jpg);
+}
+.searchbar:hover{
+    width: 200px;
+    
+    
+}
+
+.search{
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.9px);
+    -webkit-backdrop-filter: blur(6.9px);
+}
