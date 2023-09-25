@@ -1,48 +1,19 @@
-.searchbar{
+fieldset{
+    border: none;
+}
+.search{
+    height: 70px;
+    width: 95%;
     /* From https://css.glass */
     background: rgba(255, 255, 255, 0);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6.9px);
-    -webkit-backdrop-filter: blur(6.9px);
-    height: 800px;
+    backdrop-filter: blur(5.4px);
+    -webkit-backdrop-filter: blur(5.4px);
     padding: 30px;
-    width: fit-content;
-    margin: 30px;
-    transition-duration: 1s;
+    border: 1px solid whitesmoke;
     
 }
 html{
-    background-image: url(https://www.hipi.info/wp-content/uploads/2021/06/Windows-11-Wallpaper015-2048x1280.jpg);
-}
-.searchbar:hover{
-    width: 200px;
-    
-    
-}
-.searchbar:hover + .searchinput{
-    display: inline;
-    
-    
-}
-
-.search{
-    /* From https://css.glass */
-    background: rgba(255, 255, 255, 0);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6.9px);
-    -webkit-backdrop-filter: blur(6.9px);
-    display: inline;
-    
-}
-.searchinput{
-    display: none;
-        /* From https://css.glass */
-        background: rgba(255, 255, 255, 0);
-        border-radius: 4px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(6.9px);
-        -webkit-backdrop-filter: blur(6.9px);
-        padding: 3px;
+    background: url(https://www.hipi.info/wp-content/uploads/2021/06/Windows-11-Wallpaper015-2048x1280.jpg);
 }
