@@ -1,0 +1,63 @@
+
+
+.search{
+    height: 5%;
+    width: 75%;
+    /* From https://css.glass */
+    background-color: #4a4a4a; 
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.4px);
+    -webkit-backdrop-filter: blur(5.4px);
+    padding: 30px;
+
+    margin-right: 12.5%;
+    margin-left: 12.5%;
+    border: 1px solid black;
+    margin-top: 20px;
+    
+}
+.html{
+    background-color: #242424; 
+}
+
+.button {
+
+    background: rgba(183, 174, 174, 0);
+border-radius: 5px;
+border: 1px solid whitesmoke;
+height: 30px;
+width: 30px;
+margin-top: 20px;
+}
+
+h1 {
+
+color: white;
+font-size: 280%;
+margin-top: 15%;
+padding-top: 0.8%;
+margin-left: 25%;
+
+}
+
+img {
+
+float: left;
+padding-left: 43%;
+padding-right: 1%;
+}
+
+@media (max-width: 768px) {
+    /* Resize the container to fit the screen */
+    .container {
+      width: 100%;
+    }
+  
+    /* Resize the images to fit the screen */
+    .image {
+      width: 100%;
+      height: auto;
+    }
+  
+    /* Align the text to the center */}
